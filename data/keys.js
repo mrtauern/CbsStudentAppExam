@@ -1,1 +1,0 @@
-export const FIREBASE = 'AIzaSyBQYCUZd1kGZ97ZrbeGdbIaYX5T3rOUgYc';
