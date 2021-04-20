@@ -2,6 +2,8 @@ import User from '../models/User';
 import ChatMessage from '../models/ChatMessage';
 import ChatRoom from '../models/ChatRoom';
 
+import { FIREBASE } from "./../data/keys";
+
 export const TOGGLE_HAPPY = 'TOGGLE_HAPPY';
 export const ADD_TO_TEST = 'ADD_TO_TEST';
 export const NEW_CHATMESSAGE = 'NEW_CHATMESSAGE';
@@ -30,7 +32,7 @@ export const fetchChatrooms = () => {
         const token = getState().user.idToken;
 
         const response = await fetch(
-            'https://cbsstudents-38267-default-rtdb.firebaseio.com/chatrooms.json?auth=' + token, {
+            'https://cbsstudents-38267-default-rtdb.firebaseio.com/chatrooms.json?auth=' + FIREBASE, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
