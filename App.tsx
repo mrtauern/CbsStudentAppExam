@@ -20,6 +20,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { Provider, useSelector } from 'react-redux';
 import ChatReducer from './store/reducers/ChatReducer';
 import EditProfileScreen from './screens/EditProfileScreen';
+import Events from './screens/Events';
 import UserReducer from './store/reducers/UserReducer';
 import ReduxThunk from 'redux-thunk';
 import SignupScreen from './screens/SignupScreen';
@@ -53,6 +54,17 @@ function MenuStackNavigator() {
         <Stack.Screen name="EditProfile" component={EditProfileScreen} />
       </Stack.Navigator>
   );
+}
+
+function DiscoverStackNavigator() {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="Discover" component={Discover} options={{
+                title: 'Discover',
+            }}/>
+            <Stack.Screen name="Events" component={Events} />
+        </Stack.Navigator>
+    );
 }
 
 const rootReducer = combineReducers({
@@ -98,7 +110,7 @@ const UserAccess = () => {
     }}
   >
     <Tab.Screen name="Home" component={SignupScreen} />
-    <Tab.Screen name="Discover" component={Discover} />
+    <Tab.Screen name="Discover" component={DiscoverStackNavigator} />
     <Tab.Screen name="Chat" component={StackNavigator} />
     <Tab.Screen name="Menu" component={MenuStackNavigator} />
   </Tab.Navigator>

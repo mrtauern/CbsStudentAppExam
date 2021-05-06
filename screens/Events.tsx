@@ -3,20 +3,20 @@ import { View, Text, Button, StyleSheet } from 'react-native';
 import Profile from "../components/Profile";
 import Notifications from "../components/Notifications";
 
-const Discover = props => {
-   return (
-       <View>
-          <Text>Discover</Text>
+const Events = () => {
+    return (
+        <View>
+            <Text>Events</Text>
 
-          <Profile />
+            <Profile />
 
-          <Notifications />
-       </View>
-   );
+            <Notifications />
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
-   
+
 });
 
-export default Discover;
+export default Events;
