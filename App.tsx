@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
+//import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -97,7 +98,7 @@ const UserAccess = () => {
     }}
   >
     <Tab.Screen name="Home" component={SignupScreen} />
-    <Tab.Screen name="New Chatroom" component={NewChatroomScreen} />
+    <Tab.Screen name="Discover" component={Discover} />
     <Tab.Screen name="Chat" component={StackNavigator} />
     <Tab.Screen name="Menu" component={MenuStackNavigator} />
   </Tab.Navigator>
