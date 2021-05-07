@@ -21,7 +21,7 @@ export const addToTest = (text : any) => {
 };
 
 export const addToChats = (text: any, chatroomId: any) => {
-    const tempUser = new User('1','Felix Sandgren', '1234', 'felix@sandgren.dk', '', 'MSc in Medicine', true);
+    const tempUser = new User('1','felix@sandgren.dk', 'Felix Sandgren', '', 'MSc in Medicine', true);
     const message = new ChatMessage(Math.random().toString(), new Date(), text, tempUser);
 
     return {type: NEW_CHATMESSAGE, payload: {message, chatroomId }};
@@ -74,7 +74,7 @@ export const createChatroom = (chatroomName: any) => {
 
             // to save a chat message in a chat room:
             //https://cbsstudents-38267-default-rtdb.firebaseio.com/chatrooms/<chatroom_id>/chatMessages.json?auth=' + token, {
-            'https://cbsstudents-38267-default-rtdb.firebaseio.com/chatrooms.json?auth=' + token, {
+            'https://cbsstudents-38267-default-rtdb.firebaseio.com/chatrooms.json?auth=' + FIREBASE, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

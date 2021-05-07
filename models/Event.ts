@@ -1,3 +1,6 @@
+import EventSchedule from "./EventSchedule";
+import EventResponse from "./EventResponse";
+
 class Event {
     id: string;
     title: string;
@@ -7,9 +10,11 @@ class Event {
     location: string;
     organisation: string;
     thumbnail: string;
+    schedule: EventSchedule[];
+    response: EventResponse[];
 
     constructor(id: string, title: string, description: string, startDate: Date, endDate: Date, 
-            location: string, organisation: string, thumbnail: string) {
+            location: string, organisation: string, thumbnail: string, schedule: EventSchedule[], response: EventResponse[]) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -18,6 +23,8 @@ class Event {
         this.location = location;
         this.organisation = organisation;
         this.thumbnail = thumbnail;
+        this.schedule = schedule;
+        this.response = response;
     }
 }
 

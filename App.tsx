@@ -26,6 +26,7 @@ import ReduxThunk from 'redux-thunk';
 import SignupScreen from './screens/SignupScreen';
 import LoginScreen from './screens/LoginScreen';
 import NewChatroomScreen from './screens/NewChatroomScreen';
+import EventReducer from "./store/reducers/EventReducer";
 
 
 DefaultTheme.colors.background = '#FFFFFF'; // set background color globally
@@ -69,7 +70,8 @@ function DiscoverStackNavigator() {
 
 const rootReducer = combineReducers({
   chat: ChatReducer,
-  user: UserReducer
+  user: UserReducer,
+  event: EventReducer
 });
 
 // const store = createStore(rootReducer, composeWithDevTools());
@@ -90,14 +92,14 @@ const UserAccess = () => {
 
         if (route.name === 'Home') {
           iconName = focused
-            ? 'ios-information-circle'
-            : 'ios-information-circle-outline';
+            ? 'ios-home-sharp'
+            : 'ios-home-sharp';
         } else if (route.name === 'Discover') {
-          iconName = focused ? 'ios-list-box' : 'ios-list';
+          iconName = focused ? 'ios-search-sharp' : 'ios-search-sharp';
         } else if (route.name === 'Chat') {
-          iconName = focused ? 'ios-list-box' : 'ios-list';
+          iconName = focused ? 'ios-chatbubbles-sharp' : 'ios-chatbubbles-sharp';
         } else if (route.name === 'Menu') {
-          iconName = focused ? 'ios-list-box' : 'ios-list';
+          iconName = focused ? 'ios-menu-sharp' : 'ios-menu-sharp';
         }
 
         // You can return any component that you like here!
@@ -105,8 +107,8 @@ const UserAccess = () => {
       },
     })}
     tabBarOptions={{
-      activeTintColor: 'tomato',
-      inactiveTintColor: 'gray',
+      activeTintColor: '#5050A5',
+      inactiveTintColor: '#B7B7B7',
     }}
   >
     <Tab.Screen name="Home" component={SignupScreen} />
