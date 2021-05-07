@@ -48,7 +48,7 @@ export const signin = (email, password) => {
     return async dispatch => {
         console.log("signin");
         const response = await fetch(
-            'https://identitytoolkit.googleapis.com/v1/accounts:signIn?key='+FIREBASE, {
+            'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key='+FIREBASE, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -23,22 +23,22 @@ export const CHATROOM = [
     new ChatRoom('3',new Date(2021, 0, 1, 2, 2, 0), 'CBS Poker', [])
 ];
 
-export const EVENTS = [
-    new Event('1', 'Tur i Tivoli', 'kkevebibcevtoueovroeb', new Date(2021, 7, 10, 10, 0, 0), new Date(2021, 7, 10, 16, 0, 0), 'København', 'CBS students', '', EVENTSCHEDULES, EVENTRESPONSE),
-    new Event('2', 'Tur til Barcelona', 'kkevebibcevtoueovroeb', new Date(2021, 7, 15, 10, 0, 0), new Date(2021, 7, 20, 14, 30, 0), 'København', 'CBS travel', '', [], []),
-    new Event('3', 'Tur til stranden', 'kkevebibcevtoueovroeb', new Date(2021, 7, 5, 12, 0, 0), new Date(2021, 7, 5, 15, 30, 0), 'Amager strand', 'CBS surf', '', [], [])
-]
-
 export const EVENTSCHEDULES = [
     new EventSchedule('1', new Date(2021, 7, 10, 10, 0, 0), 'Mødes uden for hovedindgangen'),
     new EventSchedule('2', new Date(2021, 7, 10, 10, 30, 0), 'Køber turpas'),
-    new EventSchedule('2', new Date(2021, 7, 10, 11, 0, 0), 'Prøver forlystelser'),
-    new EventSchedule('2', new Date(2021, 7, 10, 13, 0, 0), 'Frokost'),
-    new EventSchedule('2', new Date(2021, 7, 10, 14, 0, 0), 'Forlystelser og øl'),
-    new EventSchedule('2', new Date(2021, 7, 10, 15, 30, 0), 'Fælleds afslutning'),
-]
+    new EventSchedule('3', new Date(2021, 7, 10, 11, 0, 0), 'Prøver forlystelser'),
+    new EventSchedule('4', new Date(2021, 7, 10, 13, 0, 0), 'Frokost'),
+    new EventSchedule('5', new Date(2021, 7, 10, 14, 0, 0), 'Forlystelser og øl'),
+    new EventSchedule('6', new Date(2021, 7, 10, 15, 30, 0), 'Fælleds afslutning'),
+];
 
 export const EVENTRESPONSE =[
     new EventResponse('1', USERS[1], false),
     new EventResponse('2', USERS[0], true)
+];
+
+export const EVENTS = [
+    new Event('1', 'Tur i Tivoli', 'kkevebibcevtoueovroeb', new Date(2021, 7, 10, 10, 0, 0), new Date(2021, 7, 10, 16, 0, 0), 'København', 'CBS students', '', EVENTSCHEDULES, EVENTRESPONSE),
+    new Event('2', 'Tur til Barcelona', 'kkevebibcevtoueovroeb', new Date(2021, 7, 15, 10, 0, 0), new Date(2021, 7, 20, 14, 30, 0), 'København', 'CBS travel', '', [], []),
+    new Event('3', 'Tur til stranden', 'kkevebibcevtoueovroeb', new Date(2021, 7, 5, 12, 0, 0), new Date(2021, 7, 5, 15, 30, 0), 'Amager strand', 'CBS surf', '', [], [])
 ]

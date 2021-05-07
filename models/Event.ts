@@ -24,6 +24,8 @@ class Event {
         this.organisation = organisation;
         this.thumbnail = thumbnail;
         this.schedule = schedule;
+        //console.log("_")
+        //console.log(schedule)
         this.response = response;
     }
 }

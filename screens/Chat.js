@@ -12,6 +12,7 @@ const Chat = props => {
 
     const chatrooms = useSelector(state => state.chat.chatrooms); // selecting from redux store
 
+    console.log(chatrooms);
 
     const onHappyHandler = () => {
         dispatch(toggleHappy());
