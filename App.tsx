@@ -14,6 +14,7 @@ import Home from './screens/Home';
 import Discover from './screens/Discover';
 import Chat from './screens/Chat';
 import ChatMessages from './screens/ChatMessages';
+import EventInfo from './screens/EventInfo';
 import MenuScreen from './screens/MenuScreen';
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -64,6 +65,7 @@ function DiscoverStackNavigator() {
                 title: 'Discover',
             }}/>
             <Stack.Screen name="Events" component={Events} />
+            <Stack.Screen name="EventInfo" component={EventInfo} />
         </Stack.Navigator>
     );
 }
