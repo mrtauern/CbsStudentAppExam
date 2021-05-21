@@ -37,8 +37,12 @@ export const EVENTRESPONSE =[
     new EventResponse('2', USERS[0], true)
 ];
 
+const baconIpsum = "Spicy jalapeno bacon ipsum dolor amet tail frankfurter ham hock, filet mignon biltong venison pork chop drumstick ground round. Shoulder salami porchetta flank buffalo. Fatback beef tenderloin porchetta. Strip steak porchetta short loin beef ribs pork venison cupim pork chop swine tri-tip biltong ball tip. Tongue chislic pork loin capicola hamburger strip steak. Short ribs chislic picanha, venison pork belly ground round bresaola.\n" +
+    "\n" +
+    "Tenderloin pork belly bacon beef buffalo pork loin, chislic pig doner shoulder porchetta kielbasa spare ribs. Jerky venison kevin flank meatloaf shank. Tongue hamburger short loin, sausage ribeye pork swine bresaola pork loin beef ribs landjaeger. Salami sausage capicola prosciutto hamburger. Leberkas spare ribs ham ground round turkey fatback shank tail swine. Meatloaf frankfurter filet mignon kevin, andouille cupim meatball salami rump hamburger pork belly landjaeger pork."
+
 export const EVENTS = [
-    new Event('1', 'Tur i Tivoli', 'kkevebibcevtoueovroeb', new Date(2021, 7, 10, 10, 0, 0), new Date(2021, 7, 10, 16, 0, 0), 'København', 'CBS students', '', EVENTSCHEDULES, EVENTRESPONSE),
-    new Event('2', 'Tur til Barcelona', 'kkevebibcevtoueovroeb', new Date(2021, 7, 15, 10, 0, 0), new Date(2021, 7, 20, 14, 30, 0), 'København', 'CBS travel', '', [], []),
-    new Event('3', 'Tur til stranden', 'kkevebibcevtoueovroeb', new Date(2021, 7, 5, 12, 0, 0), new Date(2021, 7, 5, 15, 30, 0), 'Amager strand', 'CBS surf', '', [], [])
+    new Event('1', 'Tur i Tivoli', baconIpsum, new Date(2021, 7, 10, 10, 0, 0), new Date(2021, 7, 10, 16, 0, 0), 'København', 'CBS students', '', EVENTSCHEDULES, EVENTRESPONSE),
+    new Event('2', 'Tur til Barcelona', baconIpsum, new Date(2021, 7, 15, 10, 0, 0), new Date(2021, 7, 20, 14, 30, 0), 'København', 'CBS travel', '', [], []),
+    new Event('3', 'Tur til stranden', baconIpsum, new Date(2021, 7, 5, 12, 0, 0), new Date(2021, 7, 5, 15, 30, 0), 'Amager strand', 'CBS surf', '', [], [])
 ]
