@@ -4,9 +4,13 @@ import { FIREBASE } from "./../data/keys";
 import ChatRoom from "../models/ChatRoom";
 import User from "../models/User";
 import ChatMessage from "../models/ChatMessage";
+import EventResponse from "../models/EventResponse";
+import {USERS} from "../data/dummy-data";
 
 export const FETCHED_EVENTS = 'FETCHED_EVENTS';
 export const NEW_EVENT = 'NEW_EVENT';
+export const ADD_RESPONSE = 'ADD_RESPONSE';
+export const HAS_RESPONDED = 'HAS_RESPONDED';
 
 export const addToChats = (text: any, chatroomId: any) => {
     const tempUser = new User('1','Felix Sandgren', '1234', 'felix@sandgren.dk', '', 'MSc in Medicine', true);
@@ -14,6 +18,18 @@ export const addToChats = (text: any, chatroomId: any) => {
 
     return {type: NEW_EVENT, payload: {message, chatroomId }};
 };
+
+export const addResponse = (eventId: number, responseType: boolean) => {
+    const tempUser = new User('1','felix@sandgren.dk', 'Felix Sandgren', '', 'MSc in Medicine', true);
+    const eventResponse = new EventResponse(Math.random().toString(), tempUser, responseType)
+
+    return {type: ADD_RESPONSE, payload: {eventResponse, eventId}};
+}
+
+export const hasResponded = (eventId: number, userId: number) => {
+
+    return {type: HAS_RESPONDED, payload: {eventId, userId}};
+}
 
 export const fetchEvents = () => {
     return async (dispatch: any, getState: any) => {

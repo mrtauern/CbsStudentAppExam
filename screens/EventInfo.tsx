@@ -17,7 +17,7 @@ import ChatRoom from '../components/ChatRoom';
 import { CHATROOM } from './../data/dummy-data';
 import ChatMessage from './../components/ChatMessage'
 import { useSelector, useDispatch } from 'react-redux';
-import { addToTest, addToChats } from './../store/ChatActions';
+import { addResponse } from './../store/EventActions';
 import Event from "../models/Event";
 import {signup} from "../store/UserActions";
 import EventResponse from "../models/EventResponse";
@@ -35,9 +35,11 @@ const EventInfo = ({route} : Props) => {
     console.log("id: "+id);
     const [value, onChangeText] = useState('Write message');
 
+    const userId = "1";
 
     const event = useSelector(state => state.event.events).find(eventInfo => eventInfo.id === id);
 
+    const eventId = event.id;
     const title = event.title;
     const organisation = event.organisation;
     const location = event.location;
@@ -48,11 +50,12 @@ const EventInfo = ({route} : Props) => {
     const schedule = event.schedule;
 
     const test = useSelector(state => state.event.events);
-    console.log("event");
-    console.log(event);
+    //console.log("event");
+    //console.log(event);
 
-    //console.log("response");
-    //console.log(response);
+    const myResponse : EventResponse = response.find(response => response.user.id === userId);
+    console.log("myResponse");
+    console.log(myResponse);
 
     let interrested : number;
     interrested = 0;
@@ -78,11 +81,13 @@ const EventInfo = ({route} : Props) => {
     };*/
 
     const addInterrested = () => {
-
+        console.log("eventId: " + eventId);
+        dispatch(addResponse(eventId, false));
     };
 
     const addGoing = () => {
-
+        console.log("eventId: " + eventId);
+        dispatch(addResponse(eventId, true));
     };
 
     const goToChat = () => {

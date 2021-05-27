@@ -11,7 +11,7 @@ const Events = () => {
 
     const events = useSelector(state => state.event.events); // selecting from redux store
 
-    console.log(events);
+    //console.log(events);
 
     return (
         <View style={styles.container}>
