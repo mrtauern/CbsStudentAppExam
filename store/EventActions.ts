@@ -10,6 +10,7 @@ import {USERS} from "../data/dummy-data";
 export const FETCHED_EVENTS = 'FETCHED_EVENTS';
 export const NEW_EVENT = 'NEW_EVENT';
 export const ADD_RESPONSE = 'ADD_RESPONSE';
+export const REMOVE_RESPONSE = 'REMOVE_RESPONSE';
 export const HAS_RESPONDED = 'HAS_RESPONDED';
 
 export const addToChats = (text: any, chatroomId: any) => {
@@ -24,6 +25,12 @@ export const addResponse = (eventId: number, responseType: boolean) => {
     const eventResponse = new EventResponse(Math.random().toString(), tempUser, responseType)
 
     return {type: ADD_RESPONSE, payload: {eventResponse, eventId}};
+}
+
+export const removeResponse = (eventId: number) => {
+    const userId = "1";
+
+    return {type: REMOVE_RESPONSE, payload: {userId, eventId}};
 }
 
 export const hasResponded = (eventId: number, userId: number) => {

@@ -17,12 +17,15 @@ import ChatRoom from '../components/ChatRoom';
 import { CHATROOM } from './../data/dummy-data';
 import ChatMessage from './../components/ChatMessage'
 import { useSelector, useDispatch } from 'react-redux';
-import { addResponse } from './../store/EventActions';
+import { addResponse, removeResponse } from './../store/EventActions';
 import Event from "../models/Event";
 import {signup} from "../store/UserActions";
 import EventResponse from "../models/EventResponse";
 import EventPost from "../components/EventPost";
 import Ionicons from '@expo/vector-icons/Ionicons';
+//import IconActionSheet from 'react-native-icon-action-sheet';
+import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet';
+
 
 export interface Props {
     route : any
@@ -34,6 +37,8 @@ const EventInfo = ({route} : Props) => {
     const { id } = route.params;
     console.log("id: "+id);
     const [value, onChangeText] = useState('Write message');
+
+
 
     const userId = "1";
 
@@ -56,6 +61,36 @@ const EventInfo = ({route} : Props) => {
     const myResponse : EventResponse = response.find(response => response.user.id === userId);
     console.log("myResponse");
     console.log(myResponse);
+
+    const [getNotGoing, setNotGoing] = useState(myResponse == undefined ? true : false);
+    const [getInterested, setInterested] = useState(myResponse == undefined ? false : (myResponse.status ? false : true));
+    const [getGoing, setGoing] = useState(myResponse == undefined ? false : (myResponse.status ? true : false));
+
+    const options = [
+        <Text style={myResponse == undefined ? styles.actionSheetNotSelected : (myResponse.status ? styles.actionSheetNotSelected : styles.actionSheetSelected) }><Ionicons name="star" size={20} color={myResponse == undefined ? "#000000" : (myResponse.status ? "#000000" : "#5050A5")} /> Interested</Text>,
+        <Text style={myResponse == undefined ? styles.actionSheetNotSelected : (myResponse.status ? styles.actionSheetSelected : styles.actionSheetNotSelected)}><Ionicons name="checkbox-outline" size={20} color={myResponse == undefined ? "#000000" : (myResponse.status ? "#5050A5" : "#000000")} /> Going</Text>,
+        <Text style={myResponse == undefined ? styles.actionSheetSelected : styles.actionSheetNotSelected}><Ionicons name="close-circle" size={20} color={myResponse == undefined ? "#5050A5" : "#000000"} /> Not going</Text>,
+    ]
+
+   /*switch (myResponse.status){
+        case true: // Going
+            setNotGoing(false);
+            setGoing(true);
+            setInterrested(false);
+            break;
+
+        case false: // Interrested
+            setNotGoing(false);
+            setGoing(false);
+            setInterrested(true);
+            break;
+
+        default: // Not going
+            setNotGoing(true);
+            setGoing(false);
+            setInterrested(false);
+
+    }*/
 
     let interrested : number;
     interrested = 0;
@@ -80,15 +115,36 @@ const EventInfo = ({route} : Props) => {
         dispatch(addToChats(value, id));
     };*/
 
-    const addInterrested = () => {
+    const addInterested = () => {
         console.log("eventId: " + eventId);
         dispatch(addResponse(eventId, false));
+
+        setNotGoing(false);
+        setGoing(false);
+        setInterested(true);
     };
 
     const addGoing = () => {
         console.log("eventId: " + eventId);
         dispatch(addResponse(eventId, true));
+
+        setNotGoing(false);
+        setGoing(true);
+        setInterested(false);
     };
+
+    const showActionSheet = () => {
+        this.ActionSheet.show()
+    };
+
+    const removeMyResponse = () => {
+        console.log("eventId: " + eventId);
+        dispatch(removeResponse(eventId));
+
+        setNotGoing(true);
+        setGoing(false);
+        setInterested(false);
+    }
 
     const goToChat = () => {
 
@@ -148,10 +204,26 @@ const EventInfo = ({route} : Props) => {
 
                     <View style={styles.responseBox}>
 
-                        <View style={styles.responseButtonsBox}>
-                            <Button icon={() => (<Ionicons name="star-outline" size={20} color="#5050A5" />)} style={[styles.responseButtons, styles.interrestedButton]} onPress={addInterrested} color="#5050A5" mode="outlined">Interrested</Button>
-                            <Button icon={() => (<Ionicons name="checkbox-outline" size={20} color="#5050A5" />)} style={[styles.responseButtons, styles.goingButton]} onPress={addGoing} color="#5050A5" mode="outlined">Going</Button>
-                        </View>
+
+                        { getNotGoing ? (
+                            <View style={styles.responseButtonsBox}>
+                                <Button icon={() => (<Ionicons name="star-outline" size={20} color="#5050A5"/>)}
+                                        style={[styles.responseButtons, styles.interestedButton]}
+                                        onPress={addInterested} color="#5050A5" mode="outlined">Interested</Button>
+                                <Button icon={() => (<Ionicons name="checkbox-outline" size={20} color="#5050A5" />)} style={[styles.responseButtons, styles.goingButton]} onPress={addGoing} color="#5050A5" mode="outlined">Going</Button>
+                            </View>
+                        ) : null}
+                        { getInterested ? (
+                            <View style={styles.responseButtonsBox}>
+                                <Button icon={() => (<Ionicons name="star" size={20} color="#FFFFFF" />)} style={styles.responseFullButtons} onPress={showActionSheet} color="#5050A5" mode="contained">Interested</Button>
+                            </View>
+                        ) : null}
+                        { getGoing ? (
+                            <View style={styles.responseButtonsBox}>
+                                <Button icon={() => (<Ionicons name="checkbox" size={20} color="#FFFFFF" />)} style={styles.responseFullButtons} onPress={showActionSheet} color="#5050A5" mode="contained">Going</Button>
+                            </View>
+                        ) : null}
+
 
                         <Text>{interrested + " Interrested"}</Text>
                         <Text>{going + " Going"}</Text>
@@ -174,6 +246,30 @@ const EventInfo = ({route} : Props) => {
                 </View>
 
             </ScrollView>
+
+            <ActionSheet
+                ref={o => this.ActionSheet = o}
+                title={<Text style={{color: '#000', fontSize: 18}}>Event response</Text>}
+                options={options}
+                //cancelButtonIndex={4}
+                //destructiveButtonIndex={4}
+                onPress={(index) => {
+                    switch (index){
+                        case 0:
+                            addInterested();
+                            break;
+                        case 1:
+                            addGoing();
+                            break;
+                        case 2:
+                            removeMyResponse();
+                            break;
+                        default:
+                            //Do nothing
+                            break;
+                    }
+                }}
+            />
         </SafeAreaView>
 
     );
@@ -264,9 +360,22 @@ const styles = StyleSheet.create({
     goingButton: {
 
     },
-    interrestedButton: {
+    interestedButton: {
         marginRight: 20,
-    }
+    },
+    responseFullButtons: {
+        width: Dimensions.get('window').width,
+    },
+    actionSheetSelected: {
+        color: '#5050A5',
+        fontWeight: "bold",
+        fontSize: 18,
+    },
+    actionSheetNotSelected: {
+        color: '#000000',
+        fontWeight: "bold",
+        fontSize: 18,
+    },
 });
 
 export default EventInfo;
