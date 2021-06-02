@@ -43,6 +43,7 @@ function StackNavigator() {
           title: 'CHAT', 
         }}/>
         <Stack.Screen name="ChatMessages" component={ChatMessages} />
+        <Stack.Screen name="NewChatroom" component={NewChatroomScreen} />
       </Stack.Navigator>
   );
 }

@@ -43,7 +43,7 @@ export const fetchEvents = () => {
         const token = getState().event.idToken;
 
         const response = await fetch(
-            'https://cbsstudents-38267-default-rtdb.firebaseio.com/events.json?auth=' + FIREBASE, {
+            'https://cbsstudentapp-9f805-default-rtdb.firebaseio.com/events.json?auth=' + FIREBASE, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -76,6 +76,7 @@ export const createEvent = (eventTitle: string, eventDescription: string, eventL
     return async (dispatch: any, getState: any) => {
 
         let event = new Event('', eventTitle, eventDescription, new Date(), new Date(), eventLocation, eventOrganisation, '', [], []);
+        //let event = new Event('', 'MyEvent', eventDescription, new Date(), new Date(), eventLocation, eventOrganisation, '', [], []);
         const token = getState().event.idToken;
         console.log("token");
         console.log(token);
@@ -85,7 +86,7 @@ export const createEvent = (eventTitle: string, eventDescription: string, eventL
 
             // to save a chat message in a chat room:
             //'https://cbsstudents-38267-default-rtdb.firebaseio.com/chatrooms/<chatroom_id>/chatMessages.json?auth=' + token, {
-            'https://cbsstudents-38267-default-rtdb.firebaseio.com/events/<event_id>.json?auth=' + FIREBASE, {
+            'https://cbsstudentapp-9f805-default-rtdb.firebaseio.com/events.json?auth=' + FIREBASE, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
