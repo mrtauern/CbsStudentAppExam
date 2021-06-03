@@ -25,6 +25,7 @@ import EventPost from "../components/EventPost";
 import Ionicons from '@expo/vector-icons/Ionicons';
 //import IconActionSheet from 'react-native-icon-action-sheet';
 import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet';
+//import Any = jasmine.Any;
 
 
 export interface Props {
@@ -54,11 +55,11 @@ const EventInfo = ({route} : Props) => {
     const description = event.description;
     const schedule = event.schedule;
 
-    const test = useSelector(state => state.event.events);
-    //console.log("event");
-    //console.log(event);
+    //const test = useSelector(state => state.event.events);
+    /*console.log("schedule");
+    console.log(schedule);*/
 
-    const myResponse : EventResponse = response.find(response => response.user.id === userId);
+    const myResponse : EventResponse | undefined = response.find(response => response.user.id === userId);
     console.log("myResponse");
     console.log(myResponse);
 
@@ -67,9 +68,9 @@ const EventInfo = ({route} : Props) => {
     const [getGoing, setGoing] = useState(myResponse == undefined ? false : (myResponse.status ? true : false));
 
     const options = [
-        <Text style={myResponse == undefined ? styles.actionSheetNotSelected : (myResponse.status ? styles.actionSheetNotSelected : styles.actionSheetSelected) }><Ionicons name="star" size={20} color={myResponse == undefined ? "#000000" : (myResponse.status ? "#000000" : "#5050A5")} /> Interested</Text>,
-        <Text style={myResponse == undefined ? styles.actionSheetNotSelected : (myResponse.status ? styles.actionSheetSelected : styles.actionSheetNotSelected)}><Ionicons name="checkbox-outline" size={20} color={myResponse == undefined ? "#000000" : (myResponse.status ? "#5050A5" : "#000000")} /> Going</Text>,
-        <Text style={myResponse == undefined ? styles.actionSheetSelected : styles.actionSheetNotSelected}><Ionicons name="close-circle" size={20} color={myResponse == undefined ? "#5050A5" : "#000000"} /> Not going</Text>,
+        <Text style={getInterested ? styles.actionSheetNotSelected : styles.actionSheetSelected}><Ionicons name="star" size={20} color={getInterested ? "#000000" : "#5050A5"} /> Interested</Text>,
+        <Text style={getGoing ? styles.actionSheetSelected : styles.actionSheetNotSelected}><Ionicons name="checkbox-outline" size={20} color={getGoing ? "#5050A5" : "#000000"} /> Going</Text>,
+        <Text style={getNotGoing ? styles.actionSheetSelected : styles.actionSheetNotSelected}><Ionicons name="close-circle" size={20} color={getNotGoing ? "#5050A5" : "#000000"} /> Not going</Text>,
     ]
 
    /*switch (myResponse.status){

@@ -1,5 +1,6 @@
 import { fetchChatrooms } from "./ChatActions";
 import { FIREBASE } from "./../data/keys";
+import {fetchEvents} from "./EventActions";
 
 
 export const SAVE_USER = 'SAVE_USER';
@@ -39,6 +40,7 @@ export const signup = (email, password) => {
            
            dispatch({type: SIGNUP, payload: data });
            dispatch(fetchChatrooms());
+           dispatch(fetchEvents());
            
        }
    };
@@ -70,6 +72,7 @@ export const signin = (email, password) => {
             
             dispatch({type: SIGNIN, payload: data });
             dispatch(fetchChatrooms());
+            dispatch(fetchEvents());
             
         }
     };

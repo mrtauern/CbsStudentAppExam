@@ -3,15 +3,18 @@ import { View, Text, Button, StyleSheet, FlatList } from 'react-native';
 import EventPost from './../components/EventPost';
 // import { CHATROOM } from './../data/dummy-data';
 import { useSelector, useDispatch } from 'react-redux';
-import { toggleHappy } from './../store/ChatActions';
+import {createChatroom, toggleHappy} from './../store/ChatActions';
 import ChatRoom from "../components/ChatRoom";
+import {createEvent} from './../store/EventActions';
+
 
 const Events = () => {
     const dispatch = useDispatch();
 
     const events = useSelector(state => state.event.events); // selecting from redux store
 
-    //console.log(events);
+    console.log("==events==");
+    console.log(events);
 
     return (
         <View style={styles.container}>
@@ -23,6 +26,10 @@ const Events = () => {
                 )}
                 keyExtractor={item => item.id}
             />
+
+            <View>
+                <Button title="Create event" onPress={() => { dispatch(createEvent(events[2])) }} />
+            </View>
 
         </View>
     );

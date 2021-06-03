@@ -6,6 +6,7 @@ import User from "../models/User";
 import ChatMessage from "../models/ChatMessage";
 import EventResponse from "../models/EventResponse";
 import {USERS} from "../data/dummy-data";
+import EventSchedule from "../models/EventSchedule";
 
 export const FETCHED_EVENTS = 'FETCHED_EVENTS';
 export const NEW_EVENT = 'NEW_EVENT';
@@ -22,9 +23,9 @@ export const addToChats = (text: any, chatroomId: any) => {
 
 export const addResponse = (eventId: number, responseType: boolean) => {
     const tempUser = new User('1','felix@sandgren.dk', 'Felix Sandgren', '', 'MSc in Medicine', true);
-    const eventResponse = new EventResponse(Math.random().toString(), tempUser, responseType)
+    const eventResponse1 = new EventResponse(Math.random().toString(), tempUser, responseType)
 
-    return {type: ADD_RESPONSE, payload: {eventResponse, eventId}};
+    return {type: ADD_RESPONSE, payload: {eventResponse1, eventId}};
 }
 
 export const removeResponse = (eventId: number) => {
@@ -40,10 +41,10 @@ export const hasResponded = (eventId: number, userId: number) => {
 
 export const fetchEvents = () => {
     return async (dispatch: any, getState: any) => {
-        const token = getState().event.idToken;
+        const token = getState().user.idToken;
 
         const response = await fetch(
-            'https://cbsstudentapp-9f805-default-rtdb.firebaseio.com/events.json?auth=' + FIREBASE, {
+            'https://cbsstudentapp-9f805-default-rtdb.firebaseio.com/events.json?auth=' + token, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -58,7 +59,30 @@ export const fetchEvents = () => {
             let events: Event[] = [];
             // Add code here to create a chatmessages array and save that right
             for (const key in data) {
-                events.push(new Event(key, key, key, new Date(data[key].startDate), new Date(data[key].endDate), key, key, key, data[key].eventSchedule, data[key].eventResponse)); /*HERE! instead of []*/
+                let schedules : EventSchedule[] = [];
+                data[key].schedule.forEach(function (s : EventSchedule) {
+                    schedules.push(new EventSchedule(s.id, s.time, s.item));
+                });
+
+                let responses : EventResponse[] = [];
+                data[key].response.forEach(function (r : EventResponse) {
+                    const u = r.user;
+                    let rUser : User = new User(u.id, u.email, u.name, u.image, u.title, u.chatNotification);
+
+                    responses.push(new EventResponse(r.id, rUser, r.status));
+                });
+
+                events.push(new Event(
+                    key,
+                    data[key].title,
+                    data[key].description,
+                    new Date(data[key].startDate),
+                    new Date(data[key].endDate),
+                    data[key].location,
+                    data[key].organisation,
+                    data[key].thumbnail,
+                    data[key].schedule == undefined ? [] as EventSchedule[] : schedules as EventSchedule[],
+                    data[key].response == undefined ? [] as EventResponse[] : responses as EventResponse[])); /*HERE! instead of []*/
             }
 
             console.log("events");
@@ -72,12 +96,13 @@ export const fetchEvents = () => {
     // return { type: NEW_CHATROOM, payload: chatroomName };
 };
 
-export const createEvent = (eventTitle: string, eventDescription: string, eventLocation: string, eventOrganisation: string) => {
+//export const createEvent = (eventTitle: string, eventDescription: string, eventLocation: string, eventOrganisation: string, thumbnail: string, schedule: EventSchedule[], responsey: EventResponse[]) => {
+export const createEvent = (event: Event) => {
     return async (dispatch: any, getState: any) => {
 
-        let event = new Event('', eventTitle, eventDescription, new Date(), new Date(), eventLocation, eventOrganisation, '', [], []);
+        //let event = new Event('', eventTitle, eventDescription, new Date(), new Date(), eventLocation, eventOrganisation, thumbnail, schedule, responsey);
         //let event = new Event('', 'MyEvent', eventDescription, new Date(), new Date(), eventLocation, eventOrganisation, '', [], []);
-        const token = getState().event.idToken;
+        const token = getState().user.idToken;
         console.log("token");
         console.log(token);
 
@@ -86,7 +111,7 @@ export const createEvent = (eventTitle: string, eventDescription: string, eventL
 
             // to save a chat message in a chat room:
             //'https://cbsstudents-38267-default-rtdb.firebaseio.com/chatrooms/<chatroom_id>/chatMessages.json?auth=' + token, {
-            'https://cbsstudentapp-9f805-default-rtdb.firebaseio.com/events.json?auth=' + FIREBASE, {
+            'https://cbsstudentapp-9f805-default-rtdb.firebaseio.com/events.json?auth=' + token, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -111,8 +136,8 @@ export const createEvent = (eventTitle: string, eventDescription: string, eventL
         if (!response.ok) {
             //There was a problem..
         } else {
-            chatroom.id = data.name;
-            dispatch({type: NEW_EVENT, payload: chatroom });
+            event.id = data.name;
+            dispatch({type: NEW_EVENT, payload: event });
         }
     };
 
