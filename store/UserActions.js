@@ -16,7 +16,7 @@ export const saveUser = (user) => {
 
 export const signup = (email, password) => {
    return async dispatch => {
-       console.log("signup");
+       console.log("//signup//");
        const response = await fetch(
            'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key='+ FIREBASE, {
            method: 'POST',
@@ -48,7 +48,7 @@ export const signup = (email, password) => {
 
 export const signin = (email, password) => {
     return async dispatch => {
-        console.log("signin");
+        console.log("//signin//");
         const response = await fetch(
             'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key='+FIREBASE, {
             method: 'POST',

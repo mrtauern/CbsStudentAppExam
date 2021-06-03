@@ -60,17 +60,21 @@ export const fetchEvents = () => {
             // Add code here to create a chatmessages array and save that right
             for (const key in data) {
                 let schedules : EventSchedule[] = [];
-                data[key].schedule.forEach(function (s : EventSchedule) {
-                    schedules.push(new EventSchedule(s.id, s.time, s.item));
-                });
+                if(data[key].schedule != undefined) {
+                    data[key].schedule.forEach(function (s: EventSchedule) {
+                        schedules.push(new EventSchedule(s.id, new Date(s.time), s.item));
+                    });
+                }
 
                 let responses : EventResponse[] = [];
-                data[key].response.forEach(function (r : EventResponse) {
-                    const u = r.user;
-                    let rUser : User = new User(u.id, u.email, u.name, u.image, u.title, u.chatNotification);
+                if(data[key].response != undefined) {
+                    data[key].response.forEach(function (r: EventResponse) {
+                        const u = r.user;
+                        let rUser: User = new User(u.id, u.email, u.name, u.image, u.title, u.chatNotification);
 
-                    responses.push(new EventResponse(r.id, rUser, r.status));
-                });
+                        responses.push(new EventResponse(r.id, rUser, r.status));
+                    });
+                }
 
                 events.push(new Event(
                     key,
@@ -85,7 +89,7 @@ export const fetchEvents = () => {
                     data[key].response == undefined ? [] as EventResponse[] : responses as EventResponse[])); /*HERE! instead of []*/
             }
 
-            console.log("events");
+            console.log("//events//");
             console.log(events);
 
 
@@ -142,4 +146,8 @@ export const createEvent = (event: Event) => {
     };
 
     // return { type: NEW_CHATROOM, payload: chatroomName };
+};
+
+export const updateEvent = (event: Event) => {
+
 };

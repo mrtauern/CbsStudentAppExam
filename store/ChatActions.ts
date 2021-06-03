@@ -50,7 +50,7 @@ export const fetchChatrooms = () => {
                 chatrooms.push(new ChatRoom(key, new Date(data[key].createdDate), data[key].name, [])); /*HERE! instead of []*/
             }
 
-            console.log("chatrooms");
+            console.log("//chatrooms//");
             console.log(chatrooms);
             
             

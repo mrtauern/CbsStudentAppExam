@@ -68,7 +68,7 @@ const EventInfo = ({route} : Props) => {
     const [getGoing, setGoing] = useState(myResponse == undefined ? false : (myResponse.status ? true : false));
 
     const options = [
-        <Text style={getInterested ? styles.actionSheetNotSelected : styles.actionSheetSelected}><Ionicons name="star" size={20} color={getInterested ? "#000000" : "#5050A5"} /> Interested</Text>,
+        <Text style={getInterested ? styles.actionSheetSelected : styles.actionSheetNotSelected}><Ionicons name="star" size={20} color={getInterested ? "#5050A5" : "#000000"} /> Interested</Text>,
         <Text style={getGoing ? styles.actionSheetSelected : styles.actionSheetNotSelected}><Ionicons name="checkbox-outline" size={20} color={getGoing ? "#5050A5" : "#000000"} /> Going</Text>,
         <Text style={getNotGoing ? styles.actionSheetSelected : styles.actionSheetNotSelected}><Ionicons name="close-circle" size={20} color={getNotGoing ? "#5050A5" : "#000000"} /> Not going</Text>,
     ]

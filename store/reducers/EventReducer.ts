@@ -21,6 +21,8 @@ const EventReducer = (state: EventState = initialState, action: Action) => {
     switch (action.type) {
         case FETCHED_EVENTS:
             return tassign(state, {events: action.payload});
+            console.log("==reduser events==");
+            console.log(this.state.events);
 
         case ADD_RESPONSE:
             const event = state.events
@@ -35,15 +37,15 @@ const EventReducer = (state: EventState = initialState, action: Action) => {
                 });
             });*/
 
-            /*console.log("eventResponses");
-            console.log(eventResponses);*/
-            const responseIndex : number = eventResponses.findIndex(response => response.user.id === action.payload.eventResponse.user.id)
+            console.log("eventResponses");
+            console.log(action.payload.eventResponse1);
+            const responseIndex : number = eventResponses.findIndex(response => response.user.id === action.payload.eventResponse1.user.id)
             /*console.log("responseIndex");
             console.log(responseIndex);*/
             if(responseIndex >= 0) {
                 eventResponses.splice(responseIndex, 1);
             }
-            eventResponses.push(action.payload.eventResponse);
+            eventResponses.push(action.payload.eventResponse1);
             /*console.log("newResponse");
             console.log(newResponse);
             eventResponses = newResponse;*/
