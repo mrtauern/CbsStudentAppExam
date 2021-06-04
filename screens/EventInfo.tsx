@@ -166,9 +166,9 @@ const EventInfo = ({route} : Props) => {
     }
 
     if(startDate.getDate() == endDate.getDate() && startDate.getMonth() == endDate.getMonth() && startDate.getFullYear() == endDate.getFullYear()){
-        date = startDate.getDate() + ". " + monthNames[startDate.getMonth()] + " kl. " + startDate.getHours() + ":" + minutesInClock(startDate.getMinutes()) + " - " + endDate.getHours() + ":" + minutesInClock(endDate.getMinutes());
+        date = startDate.getDate() + ". " + monthNames[startDate.getMonth()] + " • " + startDate.getHours() + ":" + minutesInClock(startDate.getMinutes()) + " - " + endDate.getHours() + ":" + minutesInClock(endDate.getMinutes());
     } else {
-        date = startDate.getDate() + ". " + monthNames[startDate.getMonth()] + " kl. " + startDate.getHours() + ":" + minutesInClock(startDate.getMinutes()) + " - " + startDate.getDate() + ". " + monthNames[startDate.getMonth()] + " kl. " + endDate.getHours() + ":" + minutesInClock(endDate.getMinutes());
+        date = startDate.getDate() + ". " + monthNames[startDate.getMonth()] + " • " + startDate.getHours() + ":" + minutesInClock(startDate.getMinutes()) + " - " + startDate.getDate() + ". " + monthNames[startDate.getMonth()] + " • " + endDate.getHours() + ":" + minutesInClock(endDate.getMinutes());
     }
 
     return (
@@ -192,19 +192,23 @@ const EventInfo = ({route} : Props) => {
                     </View>
 
                     <View style={styles.chatBox}>
-                        <Text>{organisation}</Text>
-                        <Text>View page</Text>
+                        <Image
+                            style={styles.tinyLogo}
+                            source={require('./../assets/ac99082f65d5c636e14e70785817899e.png')}/>
+                        <View style={styles.chatInfo}>
+                            <Text style={styles.chatInfoName}>{organisation}</Text>
+                            <Text style={styles.chatInfoView}>View page</Text>
+                        </View>
                         <Button
-                            //title={"chat"}
-                            buttonStyle={styles.chatButton}
+                            icon={() => (<Ionicons name="chatbubbles" size={30} color="#FFFFFF" />)}
+                            style={styles.chatButton}
                             onPress={goToChat}
                             color="#5050A5"
                             mode="contained"
-                        >chat</Button>
+                        ></Button>
                     </View>
 
                     <View style={styles.responseBox}>
-
 
                         { getNotGoing ? (
                             <View style={styles.responseButtonsBox}>
@@ -225,9 +229,11 @@ const EventInfo = ({route} : Props) => {
                             </View>
                         ) : null}
 
-
-                        <Text>{interrested + " Interrested"}</Text>
-                        <Text>{going + " Going"}</Text>
+                        <View style={styles.responseOverviewBox}>
+                            <Text style={styles.responseOverviewText}><Ionicons name="star" size={18} color="#000000" />  {interrested + " Interrested"}</Text>
+                            <Text style={styles.responseOverviewText}>•</Text>
+                            <Text style={styles.responseOverviewText}><Ionicons name="checkbox-outline" size={18} color="#000000" />  {going + " Going"}</Text>
+                        </View>
 
                     </View>
                 </View>
@@ -237,10 +243,13 @@ const EventInfo = ({route} : Props) => {
                 </View>
 
                 <View style={styles.scheduleBox}>
+                    <Text style={styles.scheduleHeadline}>SCHEDULE</Text>
                     <FlatList
                         data={schedule}
                         renderItem={itemData => (
-                            <Text>{itemData.item.time.getHours() + ":" + itemData.item.time.getMinutes() + "   " + itemData.item.item}</Text>
+                            <View style={styles.scheduleItem}>
+                                <Text style={styles.scheduleText}>{itemData.item.time.getHours() + ":" + minutesInClock(itemData.item.time.getMinutes()) + "   " + itemData.item.item}</Text>
+                            </View>
                         )}
                         keyExtractor={item => item.id}
                     />
@@ -317,15 +326,31 @@ const styles = StyleSheet.create({
     },
     descriptionBox: {
         //flex: 1,
-        padding: 15,
+        paddingHorizontal: 15,
+        paddingVertical: 35,
         marginBottom: 30,
         backgroundColor: 'white',
     },
     scheduleBox: {
         //flex: 1,
-        padding: 15,
+        padding: 20,
         marginBottom: 30,
         backgroundColor: 'white',
+    },
+    scheduleHeadline: {
+        fontSize: 25,
+        fontWeight: "bold",
+        marginTop: 15,
+        marginBottom: 10,
+    },
+    scheduleItem: {
+        paddingVertical: 13,
+        paddingHorizontal: 40,
+        borderBottomColor: "#DDDDDD",
+        borderBottomWidth: 1,
+    },
+    scheduleText: {
+
     },
     generalBox: {
         //flex: 1,
@@ -337,12 +362,26 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 8,
         marginTop: 15,
-        marginBottom: 15
+        marginBottom: 15,
+        flexDirection: "row",
+    },
+    chatInfo: {
+        marginVertical: 7,
+        width: Dimensions.get('window').width - 170,
+    },
+    chatInfoName: {
+        fontWeight: "bold",
+    },
+    chatInfoView: {
+        color: "#999999",
     },
     chatButton: {
         backgroundColor: '#5050A5',
-        width: 45,
-        height: 45,
+        justifyContent: "center",
+        paddingVertical: 3,
+        marginVertical: 5,
+        width: 40,
+        height: 40,
     },
     responseBox: {
         //flex: 1,
@@ -365,7 +404,17 @@ const styles = StyleSheet.create({
         marginRight: 20,
     },
     responseFullButtons: {
-        width: Dimensions.get('window').width,
+        width: Dimensions.get('window').width - 30,
+    },
+    responseOverviewBox: {
+        flexDirection: "row",
+        justifyContent: "center",
+        marginTop: 25,
+        marginBottom: 15,
+    },
+    responseOverviewText: {
+        fontWeight: "bold",
+        marginHorizontal: 8,
     },
     actionSheetSelected: {
         color: '#5050A5',
@@ -376,6 +425,10 @@ const styles = StyleSheet.create({
         color: '#000000',
         fontWeight: "bold",
         fontSize: 18,
+    },
+    tinyLogo: {
+        width: 50,
+        height: 50,
     },
 });
 

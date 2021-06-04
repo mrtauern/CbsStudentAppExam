@@ -19,7 +19,7 @@ const Events = () => {
     return (
         <View style={styles.container}>
 
-            <FlatList
+            <FlatList style={styles.flatlist}
                 data={events}
                 renderItem={itemData => (
                     <EventPost event={itemData.item}></EventPost>
@@ -39,7 +39,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        width: "100%",
+        paddingHorizontal: 20,
+    },
+    flatlist: {
+        width: "100%",
     },
 });
 
