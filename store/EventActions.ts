@@ -7,9 +7,11 @@ import ChatMessage from "../models/ChatMessage";
 import EventResponse from "../models/EventResponse";
 import {USERS} from "../data/dummy-data";
 import EventSchedule from "../models/EventSchedule";
+import {useSelector} from "react-redux";
 
 export const FETCHED_EVENTS = 'FETCHED_EVENTS';
 export const NEW_EVENT = 'NEW_EVENT';
+export const UPDATE_EVENT = 'UPDATE_EVENT';
 export const ADD_RESPONSE = 'ADD_RESPONSE';
 export const REMOVE_RESPONSE = 'REMOVE_RESPONSE';
 export const HAS_RESPONDED = 'HAS_RESPONDED';
@@ -22,16 +24,36 @@ export const addToChats = (text: any, chatroomId: any) => {
 };
 
 export const addResponse = (eventId: number, responseType: boolean) => {
-    const tempUser = new User('1','felix@sandgren.dk', 'Felix Sandgren', '', 'MSc in Medicine', true);
-    const eventResponse1 = new EventResponse(Math.random().toString(), tempUser, responseType)
+    return async (dispatch: any, getState: any) => {
+        const tempUser = new User('1', 'felix@sandgren.dk', 'Felix Sandgren', '', 'MSc in Medicine', true);
+        const eventResponse1 = new EventResponse(Math.random().toString(), tempUser, responseType)
 
-    return {type: ADD_RESPONSE, payload: {eventResponse1, eventId}};
+        //const result
+        /*console.log("==Result==")
+        console.log(result)*/
+        const result = {type: ADD_RESPONSE, payload: {eventResponse1, eventId}};
+        dispatch(result);
+
+        const event: Event = getState().event.events.find(thisEvent => thisEvent.id === eventId);
+        /*console.log("==Action event==");
+        console.log(event);*/
+        dispatch(updateEvent(event));
+
+        return dispatch(result);
+    }
 }
 
 export const removeResponse = (eventId: number) => {
-    const userId = "1";
+    return async (dispatch: any, getState: any) => {
+        const userId = "1";
 
-    return {type: REMOVE_RESPONSE, payload: {userId, eventId}};
+        const result = {type: REMOVE_RESPONSE, payload: {userId, eventId}};
+        dispatch(result);
+        const event: Event = getState().event.events.find(thisEvent => thisEvent.id === eventId);
+        dispatch(updateEvent(event));
+
+        return dispatch(result);
+    }
 }
 
 export const hasResponded = (eventId: number, userId: number) => {
@@ -149,5 +171,47 @@ export const createEvent = (event: Event) => {
 };
 
 export const updateEvent = (event: Event) => {
+    return async (dispatch: any, getState: any) => {
 
+        //let event = new Event('', eventTitle, eventDescription, new Date(), new Date(), eventLocation, eventOrganisation, thumbnail, schedule, responsey);
+        //let event = new Event('', 'MyEvent', eventDescription, new Date(), new Date(), eventLocation, eventOrganisation, '', [], []);
+        const token = getState().user.idToken;
+        console.log("token");
+        console.log(token);
+        const id = event.id;
+
+        const response = await fetch(
+            // get url from your! firebase realtime database.
+
+            // to save a chat message in a chat room:
+            //'https://cbsstudents-38267-default-rtdb.firebaseio.com/chatrooms/<chatroom_id>/chatMessages.json?auth=' + token, {
+            'https://cbsstudentapp-9f805-default-rtdb.firebaseio.com/events/' + id + '.json?auth=' + token, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ //javascript to json
+                    //key value pairs of data you want to send to server
+                    // ...
+                    title: event.title,
+                    description: event.description,
+                    startDate: event.startDate,
+                    endDate: event.endDate,
+                    location: event.location,
+                    organisation: event.organisation,
+                    thumbnail: event.thumbnail,
+                    schedule: event.schedule,
+                    response: event.response
+                })
+            });
+
+        const data = await response.json(); // json to javascript
+        console.log(data);
+        if (!response.ok) {
+            //There was a problem..
+        } else {
+            event.id = data.name;
+            dispatch({type: UPDATE_EVENT, payload: event });
+        }
+    };
 };
