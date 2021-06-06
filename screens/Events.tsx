@@ -13,8 +13,8 @@ const Events = () => {
 
     const events = useSelector(state => state.event.events); // selecting from redux store
 
-    console.log("==events==");
-    console.log(events);
+    //console.log("==events==");
+    //console.log(events);
 
     return (
         <View style={styles.container}>
@@ -27,9 +27,9 @@ const Events = () => {
                 keyExtractor={item => item.id}
             />
 
-            <View>
+            {/*<View>
                 <Button title="Create event" onPress={() => { dispatch(createEvent(events[2])) }} />
-            </View>
+            </View>*/}
 
         </View>
     );

@@ -21,21 +21,13 @@ const EventReducer = (state: EventState = initialState, action: Action) => {
     switch (action.type) {
         case FETCHED_EVENTS:
             return tassign(state, {events: action.payload});
-            console.log("==reduser events==");
-            console.log(this.state.events);
+            //console.log("==reduser events==");
+            //console.log(this.state.events);
 
         case ADD_RESPONSE:
             const event = state.events
                 .find(event => event.id === action.payload.eventId) as Event;
             const eventResponses: EventResponse[] = [...event.response];
-
-            /*event.forEach(function (event1 : Event) {
-                event1.response.forEach(function (response: EventResponse) {
-                    if (response.user.id === action.payload.eventResponse.user.id) {
-                        response.
-                    }
-                });
-            });*/
 
             console.log("eventResponses");
             console.log(action.payload.eventResponse1);
@@ -52,18 +44,6 @@ const EventReducer = (state: EventState = initialState, action: Action) => {
             /*console.log("eventResponses new");
             console.log(eventResponses);*/
 
-            /*for (let i = 0; i < state.events.length; i++){
-                if(state.events[i].id === event.id){
-                    for(let j = 0; j < state.events[i].response.length; j++){
-                        if(state.events[i].response[j].user.id === action.payload.eventResponse.user.id){
-                            let newResponse = state.events[i].response;
-                            newResponse.splice(j, 1);
-                            state.events[i].response = newResponse;
-                        }
-                    }
-                }
-            }*/
-
             const newEvent: Event = { ...event };
             newEvent.response = eventResponses;
 
@@ -74,22 +54,12 @@ const EventReducer = (state: EventState = initialState, action: Action) => {
             const eventArray: Event[] = [...state.events];
             eventArray.splice(index, 1, newEvent);
 
-
-
             return tassign(state, { events: eventArray });
 
         case REMOVE_RESPONSE:
             const event1 = state.events
                 .find(event => event.id === action.payload.eventId) as Event;
             const eventResponses1: EventResponse[] = [...event1.response];
-
-            /*event.forEach(function (event1 : Event) {
-                event1.response.forEach(function (response: EventResponse) {
-                    if (response.user.id === action.payload.eventResponse.user.id) {
-                        response.
-                    }
-                });
-            });*/
 
             /*console.log("eventResponses");
             console.log(eventResponses);*/
@@ -105,18 +75,6 @@ const EventReducer = (state: EventState = initialState, action: Action) => {
             /*console.log("eventResponses new");
             console.log(eventResponses);*/
 
-            /*for (let i = 0; i < state.events.length; i++){
-                if(state.events[i].id === event.id){
-                    for(let j = 0; j < state.events[i].response.length; j++){
-                        if(state.events[i].response[j].user.id === action.payload.eventResponse.user.id){
-                            let newResponse = state.events[i].response;
-                            newResponse.splice(j, 1);
-                            state.events[i].response = newResponse;
-                        }
-                    }
-                }
-            }*/
-
             const newEvent1: Event = { ...event1 };
             newEvent1.response = eventResponses1;
 
@@ -126,8 +84,6 @@ const EventReducer = (state: EventState = initialState, action: Action) => {
             const index1: number = state.events.findIndex(event => event.id === action.payload.eventId);
             const eventArray1: Event[] = [...state.events];
             eventArray1.splice(index1, 1, newEvent1);
-
-
 
             return tassign(state, { events: eventArray1 });
 

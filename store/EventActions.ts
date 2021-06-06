@@ -31,15 +31,18 @@ export const addResponse = (eventId: number, responseType: boolean) => {
         //const result
         /*console.log("==Result==")
         console.log(result)*/
-        const result = {type: ADD_RESPONSE, payload: {eventResponse1, eventId}};
-        dispatch(result);
 
-        const event: Event = getState().event.events.find(thisEvent => thisEvent.id === eventId);
+        const result = {type: ADD_RESPONSE, payload: {eventResponse1, eventId}};
+        dispatch(fetchEvents()).then(() => {
+            dispatch(result);
+            const event: Event = getState().event.events.find(thisEvent => thisEvent.id === eventId);
+            dispatch(updateEvent(event));
+
+            return dispatch(result);
+        });
+
         /*console.log("==Action event==");
         console.log(event);*/
-        dispatch(updateEvent(event));
-
-        return dispatch(result);
     }
 }
 
@@ -47,12 +50,15 @@ export const removeResponse = (eventId: number) => {
     return async (dispatch: any, getState: any) => {
         const userId = "1";
 
-        const result = {type: REMOVE_RESPONSE, payload: {userId, eventId}};
-        dispatch(result);
-        const event: Event = getState().event.events.find(thisEvent => thisEvent.id === eventId);
-        dispatch(updateEvent(event));
 
-        return dispatch(result);
+        const result = {type: REMOVE_RESPONSE, payload: {userId, eventId}};
+        dispatch(fetchEvents()).then(() => {
+            dispatch(result);
+            const event: Event = getState().event.events.find(thisEvent => thisEvent.id === eventId);
+            dispatch(updateEvent(event));
+
+            return dispatch(result);
+        });
     }
 }
 
@@ -111,8 +117,8 @@ export const fetchEvents = () => {
                     data[key].response == undefined ? [] as EventResponse[] : responses as EventResponse[])); /*HERE! instead of []*/
             }
 
-            console.log("//events//");
-            console.log(events);
+            //console.log("//events//");
+            //console.log(events);
 
 
             dispatch({type: FETCHED_EVENTS, payload: events });

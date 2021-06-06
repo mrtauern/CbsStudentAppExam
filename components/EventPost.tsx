@@ -3,7 +3,6 @@ import {TouchableOpacity} from "react-native-gesture-handler";
 import {Dimensions, Image, ImageBackground, StyleSheet, Text, View} from "react-native";
 import Event from '../models/Event';
 import React, {useState} from "react";
-//import LinearGradient from 'react-native-linear-gradient';
 import {LinearGradient} from 'expo-linear-gradient';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import EventResponse from "../models/EventResponse";
@@ -25,24 +24,12 @@ const EventPost = ({event} : Props) => {
     const response = event.response;
 
     const myResponse : EventResponse | undefined = response.find(response => response.user.id === userId);
-    console.log("myResponse");
-    console.log(myResponse);
+    //console.log("myResponse");
+    //console.log(myResponse);
 
     const [getNotGoing, setNotGoing] = useState(myResponse == undefined ? true : false);
     const [getInterested, setInterested] = useState(myResponse == undefined ? false : (myResponse.status ? false : true));
     const [getGoing, setGoing] = useState(myResponse == undefined ? false : (myResponse.status ? true : false));
-
-
-    /*const lastPos = props.chatroom.chatMessages.length-1;
-    let lastMessageText = '';
-    let displayTime = '';
-    if (lastPos > -1) {
-        lastMessageText = props.chatroom.chatMessages[props.chatroom.chatMessages.length-1].message;
-        const lastTime = props.chatroom.chatMessages[props.chatroom.chatMessages.length-1].createdDate;
-
-        // Should only do this if on the same date as today...
-        displayTime = lastTime.getHours() + ":" +lastTime.getMinutes();
-    }*/
 
     let date : string;
 
@@ -91,9 +78,6 @@ const EventPost = ({event} : Props) => {
                         </View>
                     </LinearGradient>
 
-                    {/* <Button title="Navigate somewhere"
-                        onPress={() => navigation.navigate("nameOfNavigationRouteEgMenu")} /> */}
-
                 </ImageBackground>
             </View>
         </TouchableOpacity>
@@ -103,16 +87,11 @@ const EventPost = ({event} : Props) => {
 const styles = StyleSheet.create({
 
     box: {
-        //flexDirection: 'row',
         flex: 1,
-        //marginLeft: 20,
-        //marginRight: 20,
         marginTop: 20,
         marginBottom: 0,
 
         height: 180,
-        //justifyContent: 'center', //Centered vertically
-        //alignItems: 'center', // Centered horizontally
         borderRadius: 5,
         backgroundColor: "#AAAAAA",
         width: '100%',

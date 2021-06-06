@@ -11,21 +11,13 @@ import {
     StatusBar,
     Dimensions
 } from 'react-native';
-//import { Button } from 'react-native-elements';
 import { Button } from 'react-native-paper';
-import ChatRoom from '../components/ChatRoom';
-import { CHATROOM } from './../data/dummy-data';
-import ChatMessage from './../components/ChatMessage'
 import { useSelector, useDispatch } from 'react-redux';
-import { addResponse, removeResponse } from './../store/EventActions';
+import {addResponse, fetchEvents, removeResponse} from './../store/EventActions';
 import Event from "../models/Event";
-import {signup} from "../store/UserActions";
 import EventResponse from "../models/EventResponse";
-import EventPost from "../components/EventPost";
 import Ionicons from '@expo/vector-icons/Ionicons';
-//import IconActionSheet from 'react-native-icon-action-sheet';
 import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet';
-//import Any = jasmine.Any;
 
 
 export interface Props {
@@ -36,10 +28,8 @@ export interface Props {
 const EventInfo = ({route} : Props) => {
     const dispatch = useDispatch();
     const { id } = route.params;
-    console.log("id: "+id);
+    //console.log("id: "+id);
     const [value, onChangeText] = useState('Write message');
-
-
 
     const userId = "1";
 
@@ -55,13 +45,12 @@ const EventInfo = ({route} : Props) => {
     const description = event.description;
     const schedule = event.schedule;
 
-    //const test = useSelector(state => state.event.events);
     /*console.log("schedule");
     console.log(schedule);*/
 
     const myResponse : EventResponse | undefined = response.find(response => response.user.id === userId);
-    console.log("myResponse");
-    console.log(myResponse);
+    //console.log("myResponse");
+    //console.log(myResponse);
 
     const [getNotGoing, setNotGoing] = useState(myResponse == undefined ? true : false);
     const [getInterested, setInterested] = useState(myResponse == undefined ? false : (myResponse.status ? false : true));
@@ -73,31 +62,11 @@ const EventInfo = ({route} : Props) => {
         <Text style={getNotGoing ? styles.actionSheetSelected : styles.actionSheetNotSelected}><Ionicons name="close-circle" size={20} color={getNotGoing ? "#5050A5" : "#000000"} /> Not going</Text>,
     ]
 
-   /*switch (myResponse.status){
-        case true: // Going
-            setNotGoing(false);
-            setGoing(true);
-            setInterrested(false);
-            break;
-
-        case false: // Interrested
-            setNotGoing(false);
-            setGoing(false);
-            setInterrested(true);
-            break;
-
-        default: // Not going
-            setNotGoing(true);
-            setGoing(false);
-            setInterrested(false);
-
-    }*/
-
     let interrested : number;
     interrested = 0;
 
     response.forEach(function (value : EventResponse) {
-        if(value.status == false){
+        if(value.status === false){
             interrested++;
         }
     });
@@ -106,15 +75,10 @@ const EventInfo = ({route} : Props) => {
     going = 0;
 
     response.forEach(function (value : EventResponse) {
-        if(value.status == true){
+        if(value.status === true){
             going++;
         }
     });
-
-    /*const handleSend = () => {
-        console.log("value " + value);
-        dispatch(addToChats(value, id));
-    };*/
 
     const addInterested = () => {
         console.log("eventId: " + eventId);
