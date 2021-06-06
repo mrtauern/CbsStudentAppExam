@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
 import Input from './../components/common/Input';
-import { signup } from './../store/UserActions';
+import { signup, signin } from './../store/UserActions';
 
 const SignupScreen = props => {
    const dispatch = useDispatch();
@@ -14,6 +14,9 @@ const SignupScreen = props => {
 
    const handleSignup = () => {
       dispatch(signup(email, password));
+   };
+   const handleSignin = () => {
+      dispatch(signin(email, password));
    };
 
    return (
@@ -31,6 +34,7 @@ const SignupScreen = props => {
             setContent={content => setPassword(content)}/>
 
          <Button title="Signup" onPress={handleSignup}/>
+         <Button title="Signin" onPress={handleSignin}/>
       </View>
    );
 }

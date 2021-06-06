@@ -1,5 +1,5 @@
 import User from '../../models/User';
-import { SAVE_USER, SIGNUP } from '../UserActions';
+import { SAVE_USER, SIGNUP, SIGNIN } from '../UserActions';
 import { USERS } from '../../data/dummy-data';
 import { tassign } from 'tassign';
 
@@ -22,6 +22,14 @@ const initialState: UserState = {
 const UserReducer = (state: UserState = initialState, action: Action) => {
     switch (action.type) {
         case SIGNUP:
+        {
+            return { ...state, 
+                loggedInUser: new User(action.payload.localId, action.payload.email), 
+                idToken: action.payload.idToken 
+            };
+        }
+
+        case SIGNIN:
         {
             return { ...state, 
                 loggedInUser: new User(action.payload.localId, action.payload.email), 

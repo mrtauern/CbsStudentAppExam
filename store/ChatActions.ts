@@ -21,7 +21,7 @@ export const addToTest = (text : any) => {
 };
 
 export const addToChats = (text: any, chatroomId: any) => {
-    const tempUser = new User('1','Felix Sandgren', '1234', 'felix@sandgren.dk', '', 'MSc in Medicine', true);
+    const tempUser = new User('1','felix@sandgren.dk', 'Felix Sandgren', '', 'MSc in Medicine', true);
     const message = new ChatMessage(Math.random().toString(), new Date(), text, tempUser);
 
     return {type: NEW_CHATMESSAGE, payload: {message, chatroomId }};
@@ -32,7 +32,7 @@ export const fetchChatrooms = () => {
         const token = getState().user.idToken;
 
         const response = await fetch(
-            'https://cbsstudents-38267-default-rtdb.firebaseio.com/chatrooms.json?auth=' + FIREBASE, {
+            'https://cbsstudentapp-9f805-default-rtdb.firebaseio.com/chatrooms.json?auth=' + token, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -50,7 +50,7 @@ export const fetchChatrooms = () => {
                 chatrooms.push(new ChatRoom(key, new Date(data[key].createdDate), data[key].name, [])); /*HERE! instead of []*/
             }
 
-            console.log("chatrooms");
+            console.log("//chatrooms//");
             console.log(chatrooms);
             
             
@@ -74,7 +74,7 @@ export const createChatroom = (chatroomName: any) => {
 
             // to save a chat message in a chat room:
             //https://cbsstudents-38267-default-rtdb.firebaseio.com/chatrooms/<chatroom_id>/chatMessages.json?auth=' + token, {
-            'https://cbsstudents-38267-default-rtdb.firebaseio.com/chatrooms.json?auth=' + token, {
+            'https://cbsstudentapp-9f805-default-rtdb.firebaseio.com/chatrooms.json?auth=' + token, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
